@@ -1,6 +1,6 @@
 <h1 align="center">
 
-<p align="center"><img src="https://drive.google.com/uc?export=view&id=1uh4kju1OkiVA5tm6g63Z3d2DCszRgxpd" width="300" height="80" ></p>
+<p align="center"><img src="https://drive.google.com/uc?export=view&id=19zk8p2z3K_q_pKaJ8AUnmdkUym-BPPDr" width="300" height="80" ></p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/react-native-about-libraries"><img src="http://img.shields.io/npm/v/react-native-about-libraries.svg?style=flat" /></a>
