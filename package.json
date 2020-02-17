@@ -1,5 +1,5 @@
 {
-  "name": "react-native-react-native-apple-music",
+  "name": "react-native-apple-music",
   "title": "React Native Apple Music",
   "version": "1.0.0",
   "description": "TODO",
@@ -9,8 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/react-native-react-native-apple-music.git",
-    "baseUrl": "https://github.com/github_account/react-native-react-native-apple-music"
+    "url": "git@github.com:Lemonadd-UG/react-native-apple-music.git",
+    "baseUrl": "https://github.com/Lemonadd-UG/react-native-apple-music"
   },
   "keywords": [
     "react-native"
