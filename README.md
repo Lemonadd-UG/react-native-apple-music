@@ -27,66 +27,65 @@ Here's a quick overview of functionalities supported:
 
 ## 📖 Getting started
 
-`npm install react-native-apple-music --save`
+`npm install @bouncyapp/react-native-apple-music --save`
 
 or
 
-`yarn add react-native-apple-music`
+`yarn add @bouncyapp/react-native-apple-music`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-apple-music`
+`react-native link @bouncyapp/react-native-apple-music`
 
 ## 💻 Usage
 
 ```javascript
-import ReactNativeAppleMusic from 'react-native-react-native-apple-music';
+import AppleMusic from '@bouncyapp/react-native-apple-music';
 
 ```
 
 ## 💡 Initialization/Authorization Methods
-- **setValsAndInit**( *keyID*, *teamID*, *Key* )
 
-	Initializes the Spotify module and resumes a logged in session if there is one. This must be the first method you call when using this module.
+All functions returning a Promise that resolves to the result.
+
+- **init**( *keyID*, *teamID*, *key* )
+
+	Initializes the Apple Music module and resumes a logged in session if there is one. This must be the first method you call when using this module.
 
 	- *Parameters*
 
 		- **keyID** - (*Required*) an object with options to pass to the Spotify Module
-		- **teamID** - (*Required*) Your spotify application's client ID that you registered with spotify [here](https://developer.spotify.com/dashboard/applications)
-		- **Key** - (*Required*) Your spotify application's client ID that you registered with spotify [here](https://developer.spotify.com/dashboard/applications)
+		- **teamID** - (*Required*) Your Apple Developer Team Id
+		- **key** - (*Required*) You need to create an Key at Apple's Certificates, Identifiers & Profiles Page with MusicKit as Enabled services
 
 	- *Returns*
 
 		- A *Promise* that resolves to a boolean when the module finishes initialization, indicating whether or not a session was automatically logged back in
 
-- **initClientWithDevToken**()
+- **login_basic**()
 
 	Login every Apple User with your Key.
   User can call non-personlised api calls like getCharts etc.
-  Calls like getHeavyRotation are not possible
 
 	- *Returns*
 
-		- *420* if the client is logged in
-        - *421* user declined the permission for Apple Music.
-		- *422* if has no Apple Music Subscription
+		- A Promise that resolves to a boolean, indicating whether or not the user was logged in
 
 
-- **initClientWithDevTokenAndUserToken**()   (*Apple Music Subscription Required*)
+- **login**()   (*Apple Music Subscription Required*)
 
 	Login user with Apple Music Subscription
 
 	- *Returns*
 
-		- *420* if the client is logged in
-        - *421* user declined the permission for Apple Music.
-		- *422* if has no Apple Music Subscription
+		- A Promise that resolves to a boolean, indicating whether or not the user was logged in
 
 
 ## TODO
 
-* Autodetect installed packages
-* Auto Font Scaling
+* Add Song to a Playlist
+* Return a user session after login
+* Search Song by ISRC
 
 
 ## ✨ Credits

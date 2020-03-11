@@ -1,5 +1,4 @@
 import { NativeModules } from 'react-native';
+import AppleMusic from './src/AppleMusic';
 
-const { ReactNativeAppleMusic } = NativeModules;
-
-export default ReactNativeAppleMusic;
+export default AppleMusic;
