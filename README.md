@@ -37,6 +37,8 @@ or
 
 `react-native link @bouncyapp/react-native-apple-music`
 
+`cd ios && pod install && cd ..`
+
 ## 💻 Usage
 
 ```javascript
@@ -79,6 +81,136 @@ All functions returning a Promise that resolves to the result.
 	- *Returns*
 
 		- A Promise that resolves to a boolean, indicating whether or not the user was logged in
+
+
+- **getICloudID**()
+
+	Get the iCloud ID of my Apple Account
+
+	- *Returns*
+
+		- A Promise that resolves the iCloud Id
+
+
+- **getSongCharts**()
+
+	Get the current Apple Music Charts
+
+	- *Returns*
+
+		- A Promise that resolves the Apple Music Charts
+
+
+- **getAlbumCharts**()
+
+	Get the current Apple Music Album Charts
+
+	- *Returns*
+
+		- A Promise that resolves the Apple Music Album Charts
+
+
+- **searchSong**(*query*)
+
+	Search for Songs at Apple Music
+
+	- *Returns*
+
+		- A Promise that resolves an Array with Songs
+
+
+- **searchAlbum**(*query*)
+
+	Search for Albums at Apple Music
+
+	- *Returns*
+
+		- A Promise that resolves an Array with Albums
+
+
+- **searchArtist**(*query*)
+
+	Search for Artists at Apple Music
+
+	- *Returns*
+
+		- A Promise that resolves an Array with Artists
+
+
+- **searchPlaylist**(*query*)
+
+	Search for Playlists at Apple Music
+
+	- *Returns*
+
+		- A Promise that resolves an Array with Playlists
+
+
+- **getSong**(*id*)
+
+	Get an specific song by id
+
+	- *Returns*
+
+		- A Promise that resolves the requested song
+
+
+- **getAlbum**(*id*)
+
+	Get an specific album by id
+
+	- *Returns*
+
+		- A Promise that resolves the requested album
+
+
+- **getArtist**(*id*)
+
+	Get an specific artist by id
+
+	- *Returns*
+
+		- A Promise that resolves the requested artist
+
+
+- **getUserPlaylists**() (*Apple Music Subscription Required*)
+
+	Get the Playlists of my Apple Music Account
+
+	- *Returns*
+
+		- A Promise that resolves an Array with Playlists
+
+
+- **recentPlayed**() (*Apple Music Subscription Required*)
+
+	Get the recently played songs, albums, artists of my Apple Music Account
+
+	- *Returns*
+
+		- A Promise that resolves an Array with songs, albums, artists
+
+
+- **getHeavyRotation**() (*Apple Music Subscription Required*)
+
+	Heavy Rotation is a collection of albums and playlists selected based on your iPhone listening habits.
+
+	- *Returns*
+
+		- A Promise that resolves an Array with songs, albums, artists
+
+
+- **getRecommendations**() (*Apple Music Subscription Required*)
+
+	Get songs, albums, artists recommendations of my Apple Music Account
+
+	- *Returns*
+
+		- A Promise that resolves an Array with songs, albums, artists
+
+
+
+
 
 
 ## TODO
