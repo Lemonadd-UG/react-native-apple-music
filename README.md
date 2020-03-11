@@ -50,7 +50,7 @@ import AppleMusic from '@bouncyapp/react-native-apple-music';
 
 All functions returning a Promise that resolves to the result.
 
-- **init**( *keyID*, *teamID*, *key* )
+- **initialize**( *keyID*, *teamID*, *key* )
 
 	Initializes the Apple Music module and resumes a logged in session if there is one. This must be the first method you call when using this module.
 
