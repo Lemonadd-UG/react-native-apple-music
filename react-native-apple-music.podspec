@@ -20,7 +20,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency 'Cider', :git => 'https://github.com/JSteegmueller/Cider.git'
+  s.dependency 'Cider'
+  s.dependency 'SwiftJWT'
+  s.dependency "PromiseKit", '~> 6.8'
   # ...
   # s.dependency "..."
 end
