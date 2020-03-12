@@ -10,16 +10,23 @@
 		497DE230241ABD4B002FE1A4 /* AppleMusicApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE22D241ABD4B002FE1A4 /* AppleMusicApiError.swift */; };
 		497DE231241ABD4B002FE1A4 /* AppleMusicAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 497DE22E241ABD4B002FE1A4 /* AppleMusicAPI.m */; };
 		497DE232241ABD4B002FE1A4 /* AppleMusicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE22F241ABD4B002FE1A4 /* AppleMusicAPI.swift */; };
+		497DE27E241AE9D3002FE1A4 /* Storefront.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE277241AE9D3002FE1A4 /* Storefront.swift */; };
+		497DE27F241AE9D3002FE1A4 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE278241AE9D3002FE1A4 /* MediaType.swift */; };
+		497DE280241AE9D3002FE1A4 /* CiderUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27A241AE9D3002FE1A4 /* CiderUrlBuilder.swift */; };
+		497DE281241AE9D3002FE1A4 /* Include.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27B241AE9D3002FE1A4 /* Include.swift */; };
+		497DE282241AE9D3002FE1A4 /* UrlFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */; };
+		497DE283241AE9D3002FE1A4 /* CiderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27D241AE9D3002FE1A4 /* CiderClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		58B511D91A9E6C8500147676 /* CopyFiles */ = {
+		58B511D91A9E6C8500147676 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -30,6 +37,12 @@
 		497DE22D241ABD4B002FE1A4 /* AppleMusicApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleMusicApiError.swift; sourceTree = "<group>"; };
 		497DE22E241ABD4B002FE1A4 /* AppleMusicAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleMusicAPI.m; sourceTree = "<group>"; };
 		497DE22F241ABD4B002FE1A4 /* AppleMusicAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleMusicAPI.swift; sourceTree = "<group>"; };
+		497DE277241AE9D3002FE1A4 /* Storefront.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storefront.swift; sourceTree = "<group>"; };
+		497DE278241AE9D3002FE1A4 /* MediaType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		497DE27A241AE9D3002FE1A4 /* CiderUrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CiderUrlBuilder.swift; sourceTree = "<group>"; };
+		497DE27B241AE9D3002FE1A4 /* Include.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Include.swift; sourceTree = "<group>"; };
+		497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlFetcher.swift; sourceTree = "<group>"; };
+		497DE27D241AE9D3002FE1A4 /* CiderClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CiderClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +64,39 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		497DE275241AE9D3002FE1A4 /* Cider */ = {
+			isa = PBXGroup;
+			children = (
+				497DE276241AE9D3002FE1A4 /* ResourceObjects */,
+				497DE279241AE9D3002FE1A4 /* Client */,
+			);
+			path = Cider;
+			sourceTree = "<group>";
+		};
+		497DE276241AE9D3002FE1A4 /* ResourceObjects */ = {
+			isa = PBXGroup;
+			children = (
+				497DE277241AE9D3002FE1A4 /* Storefront.swift */,
+				497DE278241AE9D3002FE1A4 /* MediaType.swift */,
+			);
+			path = ResourceObjects;
+			sourceTree = "<group>";
+		};
+		497DE279241AE9D3002FE1A4 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				497DE27A241AE9D3002FE1A4 /* CiderUrlBuilder.swift */,
+				497DE27B241AE9D3002FE1A4 /* Include.swift */,
+				497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */,
+				497DE27D241AE9D3002FE1A4 /* CiderClient.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				497DE275241AE9D3002FE1A4 /* Cider */,
 				497DE22E241ABD4B002FE1A4 /* AppleMusicAPI.m */,
 				497DE22F241ABD4B002FE1A4 /* AppleMusicAPI.swift */,
 				497DE22D241ABD4B002FE1A4 /* AppleMusicApiError.swift */,
@@ -71,7 +114,7 @@
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
-				58B511D91A9E6C8500147676 /* CopyFiles */,
+				58B511D91A9E6C8500147676 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -120,9 +163,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				497DE283241AE9D3002FE1A4 /* CiderClient.swift in Sources */,
+				497DE27F241AE9D3002FE1A4 /* MediaType.swift in Sources */,
+				497DE281241AE9D3002FE1A4 /* Include.swift in Sources */,
 				497DE230241ABD4B002FE1A4 /* AppleMusicApiError.swift in Sources */,
+				497DE27E241AE9D3002FE1A4 /* Storefront.swift in Sources */,
 				497DE232241ABD4B002FE1A4 /* AppleMusicAPI.swift in Sources */,
 				497DE231241ABD4B002FE1A4 /* AppleMusicAPI.m in Sources */,
+				497DE280241AE9D3002FE1A4 /* CiderUrlBuilder.swift in Sources */,
+				497DE282241AE9D3002FE1A4 /* UrlFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

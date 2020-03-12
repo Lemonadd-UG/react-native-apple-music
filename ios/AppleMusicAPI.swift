@@ -6,7 +6,6 @@
 //  Copyright © 2020 Janik Steegmüller. All rights reserved.
 //
 import Foundation
-import Cider
 import SwiftJWT
 import StoreKit
 import PromiseKit
