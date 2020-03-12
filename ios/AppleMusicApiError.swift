@@ -3,7 +3,7 @@
 //  AwesomeApp
 //
 //  Created by Janik Steegmüller on 19.12.19.
-//  Copyright © 2019 Facebook. All rights reserved.
+//  Copyright © 2020 Janik Steegmüller. All rights reserved.
 //
 struct AppleMusicApiError: Error {
    static let USER_DECLINED_PERMISSION: Int = 421

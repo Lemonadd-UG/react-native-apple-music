@@ -3,7 +3,7 @@
 //  AppleMusicApi-Test
 //
 //  Created by Janik Steegmüller on 07.07.19.
-//  Copyright © 2019 Janik Steegmüller. All rights reserved.
+//  Copyright © 2020 Janik Steegmüller. All rights reserved.
 //
 import Foundation
 import Cider
