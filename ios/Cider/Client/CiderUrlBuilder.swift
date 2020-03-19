@@ -18,6 +18,7 @@ protocol UrlBuilder {
     func chartsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
     func userPlaylistsRequest(limit: Int?, offset: Int?) -> URLRequest
     func userRecommendationsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
+    func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest
 }
 
 public enum CiderUrlBuilderError: Error {
@@ -41,10 +42,12 @@ private struct AppleMusicApi {
     static let limitParameter = "limit"
     static let offsetParameter = "offset"
     static let typesParameter = "types"
+    static let filterParameter = "filter[isrc]"
 
     // Fetch
     static let fetchPath = "v1/catalog/{storefront}/{mediaType}/{id}"
     static let fetchInclude = "include"
+    static let fetchIsrcPath = "v1/catalog/{storefront}/{mediaType}"
     
     // User-specific heavy-rotation https://api.music.apple.com/v1/me/history/heavy-rotation
     static let heavyRotationPath = "v1/me/history/heavy-rotation"
@@ -202,6 +205,15 @@ struct CiderUrlBuilder: UrlBuilder {
 
         return components.url(relativeTo: baseApiUrl)!.absoluteURL
     }
+    
+    private func fetchIsrcUrl(mediaType: MediaType, isrc: String, include: [Include]?) -> URL {
+        var components = URLComponents()
+
+        components.path = AppleMusicApi.fetchIsrcPath.addStorefront(storefront).addMediaType(mediaType)
+        components.apply(isrc: isrc)
+
+        return components.url(relativeTo: baseApiUrl)!.absoluteURL
+    }
 
     private func relationshipUrl(path: String, limit: Int?, offset: Int?) -> URL {
         var components = URLComponents()
@@ -242,6 +254,11 @@ struct CiderUrlBuilder: UrlBuilder {
 
     func searchRequest(term: String, limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest {
         let url = seachUrl(term: term, limit: limit, offset: offset, types: types)
+        return constructRequest(url: url)
+    }
+    
+    func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest {
+        let url = fetchIsrcUrl(mediaType: mediaType, isrc: isrc, include: include)
         return constructRequest(url: url)
     }
 
@@ -336,6 +353,11 @@ private extension URLComponents {
 
         createQueryItemsIfNeeded()
         queryItems?.append(URLQueryItem(name: AppleMusicApi.typesParameter, value: mediaTypes.map { $0.rawValue }.joined(separator: ",")))
+    }
+    
+    mutating func apply(isrc: String){
+        createQueryItemsIfNeeded()
+        queryItems?.append(URLQueryItem(name: AppleMusicApi.filterParameter, value: "\(isrc)"))
     }
 
     mutating func apply(limit: Int?) {

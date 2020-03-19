@@ -369,6 +369,19 @@ class AppleMusicAPI: NSObject {
             }
         }
     }
+    
+    @objc
+    public func fetchSongWithIsrc(_ isrc: String, callback: @escaping RCTResponseSenderBlock) {
+        if (client != nil) {
+            client!.fetchIsrcJsonString(mediaType: .songs, isrc: isrc) { result, error in
+                if (error == nil) {
+                    callback([true, [result]])
+                } else{
+                    callback([false, error.debugDescription])
+                }
+            }
+        }
+    }
 
 
   @objc

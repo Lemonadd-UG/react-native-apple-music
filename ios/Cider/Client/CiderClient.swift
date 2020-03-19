@@ -85,6 +85,21 @@ public struct CiderClient {
     }
     
     /**
+     Fetch media via isrc
+     
+     */
+    public func fetchIsrcJsonString(mediaType: MediaType, isrc: String, include: [Include]? = nil, completion: @escaping (String, Error?) -> Void) {
+        let request = urlBuilder.fetchIsrcRequest(mediaType: mediaType, isrc: isrc, include: include)
+        fetcher.fetch(request: request) { (data, error) in
+            guard let data = data else {
+                completion("", error)
+                return
+            }
+            completion(String.init(data: data, encoding: .utf8) ?? "error decoding", nil)
+        }
+    }
+    
+    /**
      Get recent played as json from user
      
      */
