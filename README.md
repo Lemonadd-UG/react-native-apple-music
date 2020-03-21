@@ -216,6 +216,14 @@ All functions returning a Promise that resolves to the result.
 		- A Promise that resolves an Array with songs, albums, artists
 
 
+- **addToPlaylist**(*playlistId*, *songId*) (*Apple Music Subscription Required*)
+
+	Add the song to the playlist in my Apple Music Account
+
+	- *Returns*
+
+		- A Promise that resolves to "204" if successfull
+
 
 
 
