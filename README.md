@@ -3,7 +3,6 @@
 <p align="center"><img src="https://drive.google.com/uc?export=view&id=19zk8p2z3K_q_pKaJ8AUnmdkUym-BPPDr" width="300" height="80" ></p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/react-native-about-libraries"><img src="http://img.shields.io/npm/v/react-native-about-libraries.svg?style=flat" /></a>
   <a href="https://github.com/prscX/react-native-about-libraries/pulls"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" /></a>
   <a href="https://github.com/prscX/react-native-about-libraries#License"><img src="https://img.shields.io/npm/l/react-native-about-libraries.svg?style=flat" /></a>
 </p>
@@ -230,9 +229,7 @@ All functions returning a Promise that resolves to the result.
 
 ## TODO
 
-* Add Song to a Playlist
 * Return a user session after login
-* Search Song by ISRC
 
 
 ## ✨ Credits
