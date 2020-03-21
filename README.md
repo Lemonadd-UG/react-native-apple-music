@@ -35,7 +35,7 @@ or
 
 ### Mostly automatic installation
 
-`react-native link @bouncyapp/react-native-apple-music`
+`react-native link @bouncyapp/react-native-apple-music --platforms ios`
 
 `cd ios && pod install && cd ..`
 
