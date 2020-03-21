@@ -42,6 +42,12 @@ RCT_EXTERN_METHOD(getRecentPlayed:(RCTResponseSenderBlock)callback)
 RCT_EXTERN_METHOD(getUserRecommendations:(RCTResponseSenderBlock)callback)
 RCT_EXTERN_METHOD(getAllUserPlaylists:(RCTResponseSenderBlock)callback)
 
+RCT_EXTERN_METHOD(addToPlaylist:(NSString)playlistId
+                        mediaId:(NSString)mediaId
+                        resolve:(RCTPromiseResolveBlock)resolve
+                        reject:(RCTPromiseRejectBlock)reject)
+
+
 
 //other
 RCT_EXTERN_METHOD(getUserRecordID:(RCTResponseSenderBlock)callback)

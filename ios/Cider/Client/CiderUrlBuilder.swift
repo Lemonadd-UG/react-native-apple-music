@@ -19,6 +19,7 @@ protocol UrlBuilder {
     func userPlaylistsRequest(limit: Int?, offset: Int?) -> URLRequest
     func userRecommendationsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
     func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest
+    func addToPlaylistRequest(playlistId: String, mediaId: String ,mediaType: MediaType) -> URLRequest
 }
 
 public enum CiderUrlBuilderError: Error {
@@ -63,6 +64,9 @@ private struct AppleMusicApi {
     
     //User-specific recommendations
     static let recommendationsPath = "v1/me/recommendations"
+    
+    //Add song to playlist
+    static let addMediaToPlaylistPath = "v1/me/library/playlists/{id}/tracks"
     
 }
 
@@ -224,6 +228,14 @@ struct CiderUrlBuilder: UrlBuilder {
 
         return components.url(relativeTo: baseApiUrl)!.absoluteURL
     }
+    
+    private func addToPlaylistUrl(playlistId: String) -> URL {
+        var compoments = URLComponents()
+        
+        compoments.path = AppleMusicApi.addMediaToPlaylistPath.addId(playlistId)
+        
+        return compoments.url(relativeTo: baseApiUrl)!.absoluteURL
+    }
 
     // MARK: Construct requests
     
@@ -276,7 +288,25 @@ struct CiderUrlBuilder: UrlBuilder {
         let url = relationshipUrl(path: path, limit: limit, offset: offset)
         return constructRequest(url: url)
     }
+    
+    func addToPlaylistRequest(playlistId: String, mediaId: String ,mediaType: MediaType) -> URLRequest {
+        let url = addToPlaylistUrl(playlistId: playlistId)
+        let data = [LibraryPlaylistRequestTrack.Media(id: mediaId, type: mediaType)]
+        
+        return constructPostRequest(url: url, media: LibraryPlaylistRequestTrack(data: data))
+    }
 
+    func constructPostRequest(url: URL, media: LibraryPlaylistRequestTrack) -> URLRequest {
+        var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeout)
+        request = addAuth(request: request)
+        request = try! addUserToken(request: request)
+        
+        request.httpMethod = "POST"
+        request.httpBody = try! JSONEncoder().encode(media)
+        
+        return request
+    }
+    
     private func constructRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeout)
         request = addAuth(request: request)

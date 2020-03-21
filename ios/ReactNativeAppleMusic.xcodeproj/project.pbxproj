@@ -16,6 +16,7 @@
 		497DE281241AE9D3002FE1A4 /* Include.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27B241AE9D3002FE1A4 /* Include.swift */; };
 		497DE282241AE9D3002FE1A4 /* UrlFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */; };
 		497DE283241AE9D3002FE1A4 /* CiderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27D241AE9D3002FE1A4 /* CiderClient.swift */; };
+		49AD87D62426317B00C771F3 /* LibraryPlaylistRequestTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AD87D52426317B00C771F3 /* LibraryPlaylistRequestTrack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 		497DE27B241AE9D3002FE1A4 /* Include.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Include.swift; sourceTree = "<group>"; };
 		497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlFetcher.swift; sourceTree = "<group>"; };
 		497DE27D241AE9D3002FE1A4 /* CiderClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CiderClient.swift; sourceTree = "<group>"; };
+		49AD87D52426317B00C771F3 /* LibraryPlaylistRequestTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPlaylistRequestTrack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,9 +95,19 @@
 			path = Client;
 			sourceTree = "<group>";
 		};
+		49AD87D42426317B00C771F3 /* JsonModels */ = {
+			isa = PBXGroup;
+			children = (
+				49AD87D52426317B00C771F3 /* LibraryPlaylistRequestTrack.swift */,
+			);
+			name = JsonModels;
+			path = Cider/JsonModels;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				49AD87D42426317B00C771F3 /* JsonModels */,
 				497DE275241AE9D3002FE1A4 /* Cider */,
 				497DE22E241ABD4B002FE1A4 /* AppleMusicAPI.m */,
 				497DE22F241ABD4B002FE1A4 /* AppleMusicAPI.swift */,
@@ -170,6 +182,7 @@
 				497DE27E241AE9D3002FE1A4 /* Storefront.swift in Sources */,
 				497DE232241ABD4B002FE1A4 /* AppleMusicAPI.swift in Sources */,
 				497DE231241ABD4B002FE1A4 /* AppleMusicAPI.m in Sources */,
+				49AD87D62426317B00C771F3 /* LibraryPlaylistRequestTrack.swift in Sources */,
 				497DE280241AE9D3002FE1A4 /* CiderUrlBuilder.swift in Sources */,
 				497DE282241AE9D3002FE1A4 /* UrlFetcher.swift in Sources */,
 			);

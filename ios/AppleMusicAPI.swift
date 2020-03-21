@@ -371,6 +371,19 @@ class AppleMusicAPI: NSObject {
     }
     
     @objc
+    public func addToPlaylist(_ playlistId: String, mediaId: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
+        if ( client != nil) {
+            client!.addToPlaylist(playlistId: playlistId, mediaId: mediaId, mediaType: .songs) { (result, error) in
+                if( error == nil) {
+                    resolve(result)
+                } else {
+                    reject("Error adding", "Error adding", error)
+                }
+            }
+        }
+    }
+    
+    @objc
     public func fetchSongWithIsrc(_ isrc: String, callback: @escaping RCTResponseSenderBlock) {
         if (client != nil) {
             client!.fetchIsrcJsonString(mediaType: .songs, isrc: isrc) { result, error in

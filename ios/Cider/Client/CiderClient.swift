@@ -160,6 +160,18 @@ public struct CiderClient {
         }
     }
     
+    public func addToPlaylist(playlistId: String, mediaId: String, mediaType: MediaType, completion: @escaping (String, Error?) -> Void){
+        let request = urlBuilder.addToPlaylistRequest(playlistId: playlistId, mediaId: mediaId, mediaType: mediaType)
+        fetcher.fetch(request: request) {(data, error, response) in
+            guard data != nil else {
+                completion("", error)
+                return
+            }
+            let httpResponse: HTTPURLResponse = response as! HTTPURLResponse
+            completion(String(httpResponse.statusCode) , nil)
+        }
+    }
+    
     public func getMediaInfoJsonString(mediaType: MediaType, id: String, completion: @escaping (String, Error?) -> Void){
         let request = urlBuilder.fetchRequest(mediaType: mediaType, id: id, include: nil)
         fetcher.fetch(request: request){ (data, error, response) in
