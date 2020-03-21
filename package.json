@@ -1,8 +1,8 @@
 {
   "name": "@bouncyapp/react-native-apple-music",
   "title": "React Native Apple Music",
-  "version": "1.0.0",
-  "description": "TODO",
+  "version": "1.0.1",
+  "description": "A react native module for the Apple Music API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,13 @@
     "baseUrl": "https://github.com/Lemonadd-UG/react-native-apple-music"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "ios",
+    "apple music",
+    "apple music api",
+    "music",
+    "react-native-apple-music",
+    "apple"
   ],
   "author": "Bouncy",
   "license": "MIT",
