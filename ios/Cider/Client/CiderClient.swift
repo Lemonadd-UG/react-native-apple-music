@@ -59,7 +59,7 @@ public struct CiderClient {
      */
     public func recommendationsJsonString(limit: Int? = nil, offset: Int? = nil, types: [MediaType]? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.userRecommendationsRequest(limit: limit, offset: offset, types: types)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -75,7 +75,7 @@ public struct CiderClient {
      */
     public func heavyRotationJsonString(limit: Int? = nil, offset: Int? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.heavyRotationRequest(limit: limit, offset: offset)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -90,7 +90,7 @@ public struct CiderClient {
      */
     public func fetchIsrcJsonString(mediaType: MediaType, isrc: String, include: [Include]? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.fetchIsrcRequest(mediaType: mediaType, isrc: isrc, include: include)
-        fetcher.fetch(request: request) { (data, error) in
+        fetcher.fetch(request: request) { (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -105,7 +105,7 @@ public struct CiderClient {
      */
     public func recentPlayedJsonString(limit: Int? = nil, offset: Int? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.recentPlayedRequest(limit: limit, offset: offset)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -120,7 +120,7 @@ public struct CiderClient {
     */
     public func userPlaylistsJsonString(limit: Int? = nil, offset: Int? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.userPlaylistsRequest(limit: limit, offset: offset)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -136,7 +136,7 @@ public struct CiderClient {
      */
     public func chartsJsonString(limit: Int? = nil, offset: Int? = nil, types: [MediaType]? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.chartsRequest(limit: limit, offset: offset, types: types)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -151,7 +151,7 @@ public struct CiderClient {
     */
     public func searchJsonString(term: String, limit: Int? = nil, offset: Int? = nil, types: [MediaType]? = nil, completion: @escaping (String, Error?) -> Void) {
         let request = urlBuilder.searchRequest(term: term, limit: limit, offset: offset, types: types)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
@@ -162,7 +162,7 @@ public struct CiderClient {
     
     public func getMediaInfoJsonString(mediaType: MediaType, id: String, completion: @escaping (String, Error?) -> Void){
         let request = urlBuilder.fetchRequest(mediaType: mediaType, id: id, include: nil)
-        fetcher.fetch(request: request){ (data, error) in
+        fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return
