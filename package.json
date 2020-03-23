@@ -1,7 +1,7 @@
 {
   "name": "@bouncyapp/react-native-apple-music",
   "title": "React Native Apple Music",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A react native module for the Apple Music API",
   "main": "index.js",
   "scripts": {
