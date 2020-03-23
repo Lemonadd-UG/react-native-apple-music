@@ -187,6 +187,14 @@ All functions returning a Promise that resolves to the result.
 
 		- A Promise that resolves an Array with Playlists
 
+- **getUserPlaylist**(*id*) (*Apple Music Subscription Required*)
+
+	Get a Playlist of my Apple Music Account
+
+	- *Returns*
+
+		- A Promise that resolves to the requested Playlist
+
 
 - **recentPlayed**() (*Apple Music Subscription Required*)
 

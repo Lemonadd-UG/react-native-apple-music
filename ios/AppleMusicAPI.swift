@@ -348,11 +348,24 @@ class AppleMusicAPI: NSObject {
     @objc
     public func getAllUserPlaylists(_ callback: @escaping RCTResponseSenderBlock) {
         if (client != nil) {
-            client!.userPlaylistsJsonString(limit: 50) { results, error in
+            client!.getAllUserPlaylistsJsonString(limit: 50) { results, error in
                 if (error == nil) {
                     callback([true, [results]])
                 } else {
                     callback([false, error.debugDescription])
+                }
+            }
+        }
+    }
+    
+    @objc
+    public func getUserPlaylist(_ id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
+        if (client != nil) {
+            client!.getUserPlaylistJsonString(id: id){ result, error in
+                if (error == nil) {
+                    resolve(result)
+                } else{
+                    reject("Error fetching", "Error fetching", error)
                 }
             }
         }

@@ -118,9 +118,20 @@ public struct CiderClient {
     Get all playlists from user as json
      
     */
-    public func userPlaylistsJsonString(limit: Int? = nil, offset: Int? = nil, completion: @escaping (String, Error?) -> Void) {
-        let request = urlBuilder.userPlaylistsRequest(limit: limit, offset: offset)
+    public func getAllUserPlaylistsJsonString(limit: Int? = nil, offset: Int? = nil, completion: @escaping (String, Error?) -> Void) {
+        let request = urlBuilder.allUserPlaylistsRequest(limit: limit, offset: offset)
         fetcher.fetch(request: request){ (data, error, response) in
+            guard let data = data else {
+                completion("", error)
+                return
+            }
+            completion(String.init(data: data, encoding: .utf8) ?? "error decoding", nil)
+        }
+    }
+    
+    public func getUserPlaylistJsonString(id: String, completion: @escaping (String, Error?) -> Void) {
+        let request = urlBuilder.userPlaylistRequest(id: id)
+        fetcher.fetch(request: request) { (data, error, response) in
             guard let data = data else {
                 completion("", error)
                 return

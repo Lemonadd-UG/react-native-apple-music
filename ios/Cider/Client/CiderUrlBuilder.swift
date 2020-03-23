@@ -16,7 +16,8 @@ protocol UrlBuilder {
     func heavyRotationRequest(limit: Int?, offset: Int?) -> URLRequest
     func recentPlayedRequest(limit: Int?, offset: Int?) -> URLRequest
     func chartsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
-    func userPlaylistsRequest(limit: Int?, offset: Int?) -> URLRequest
+    func allUserPlaylistsRequest(limit: Int?, offset: Int?) -> URLRequest
+    func userPlaylistRequest(id: String) -> URLRequest
     func userRecommendationsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
     func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest
     func addToPlaylistRequest(playlistId: String, mediaId: String ,mediaType: MediaType) -> URLRequest
@@ -57,7 +58,8 @@ private struct AppleMusicApi {
     static let recentPlayedPath = "v1/me/recent/played"
     
     // Private user playlists
-    static let userPlaylistsPath = "v1/me/library/playlists"
+    static let allUserPlaylistsPath = "v1/me/library/playlists"
+    static let userPlaylistPath  = "v1/me/library/playlists/{id}"
     
     //Charts of specific country https://api.music.apple.com/v1/catalog/{storefront}/charts
     static let chartsPath = "v1/catalog/us/charts"
@@ -129,10 +131,19 @@ struct CiderUrlBuilder: UrlBuilder {
         return components.url(relativeTo: baseApiUrl)!
     }
     
-    private func userPlaylistsUrl( limit: Int?, offset: Int?) -> URL {
+    private func userPlaylistUrl( id: String) -> URL {
         var components = URLComponents()
         
-        components.path = AppleMusicApi.userPlaylistsPath
+        components.path = AppleMusicApi.userPlaylistPath.addId(id)
+        components.apply(include: [.tracks])
+    
+        return components.url(relativeTo: baseApiUrl)!
+    }
+    
+    private func allUserPlaylistsUrl( limit: Int?, offset: Int?) -> URL {
+        var components = URLComponents()
+        
+        components.path = AppleMusicApi.allUserPlaylistsPath
         
         components.apply(limit: limit)
         components.apply(offset: offset)
@@ -249,8 +260,13 @@ struct CiderUrlBuilder: UrlBuilder {
         return constructRequestWithUserAuth(url: url)
     }
 
-    func userPlaylistsRequest(limit: Int?, offset: Int?) -> URLRequest {
-        let url = userPlaylistsUrl(limit: limit, offset: offset)
+    func allUserPlaylistsRequest(limit: Int?, offset: Int?) -> URLRequest {
+        let url = allUserPlaylistsUrl(limit: limit, offset: offset)
+        return constructRequestWithUserAuth(url: url)
+    }
+    
+    func userPlaylistRequest(id: String) -> URLRequest {
+        let url = userPlaylistUrl(id: id)
         return constructRequestWithUserAuth(url: url)
     }
     
