@@ -312,27 +312,4 @@ AppleMusic.getRecommendations = () => {
   })
 }
 
-const getSongWithIsrc = AppleMusic.fetchSongWithIsrc
-AppleMusic.fetchSongWithIsrc = (isrc) => {
-  return new Promise((resolve, reject) => {
-    getSongWithIsrc(isrc, (answer, rest) => {
-      if (answer) {
-        try {
-          let cb =  JSON.parse(rest)
-          console.log(cb.data)
-          const _song = cb.data
-          resolve(_song)
-        } catch (e) {
-          reject(new Error("error trying to get song with isrc"))
-        }
-
-      } else {
-        reject(new Error("error trying to get song with isrc"))
-      }
-     })
-  })
-}
-
-
-
 export default AppleMusic;

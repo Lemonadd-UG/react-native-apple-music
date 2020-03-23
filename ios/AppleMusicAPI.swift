@@ -384,13 +384,13 @@ class AppleMusicAPI: NSObject {
     }
     
     @objc
-    public func fetchSongWithIsrc(_ isrc: String, callback: @escaping RCTResponseSenderBlock) {
+    public func fetchSongWithIsrc(_ isrc: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.fetchIsrcJsonString(mediaType: .songs, isrc: isrc) { result, error in
                 if (error == nil) {
-                    callback([true, [result]])
+                    resolve(result)
                 } else{
-                    callback([false, error.debugDescription])
+                    reject("Error fetching", "Error fetching", error)
                 }
             }
         }
