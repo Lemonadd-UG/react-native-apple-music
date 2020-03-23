@@ -74,12 +74,17 @@ class AppleMusicAPI: NSObject {
     */
     @objc
     public func initClientWithDevTokenAndUserToken(_ callback: @escaping RCTResponseSenderBlock) {
-        getUserToken { result, status in
-            if (status == 420) {
-                self.client = CiderClient(storefront: .germany, developerToken: self.devToken!, userToken: self.userToken!)
+        if(self.userToken == nil) {
+            getUserToken { result, status in
+                if (status == 420) {
+                    self.client = CiderClient(storefront: .germany, developerToken: self.devToken!, userToken: self.userToken!)
+                }
+                callback([status])
             }
-            callback([status])
+            return
         }
+        callback([420])
+        return
     }
 
     //MARK: Calculating and requesting tokens
