@@ -183,8 +183,8 @@ public struct CiderClient {
         }
     }
     
-    public func getMediaInfoJsonString(mediaType: MediaType, id: String, completion: @escaping (String, Error?) -> Void){
-        let request = urlBuilder.fetchRequest(mediaType: mediaType, id: id, include: nil)
+    public func getCatalogObjectWithId(mediaType: MediaType, id: String, include:[Include]? ,completion: @escaping (String, Error?) -> Void){
+        let request = urlBuilder.fetchRequest(mediaType: mediaType, id: id, include: include)
         fetcher.fetch(request: request){ (data, error, response) in
             guard let data = data else {
                 completion("", error)

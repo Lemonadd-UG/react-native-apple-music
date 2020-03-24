@@ -244,11 +244,28 @@ class AppleMusicAPI: NSObject {
     @objc
     public func getSong(_ id: String, callback: @escaping RCTResponseSenderBlock) {
         if (client != nil) {
-          client!.getMediaInfoJsonString(mediaType: .songs, id: id) { results, error in
+            client!.getCatalogObjectWithId(mediaType: .songs, id: id, include: nil) { results, error in
                 if (error == nil) {
                     callback([true, [results]])
                 } else {
                     callback([false, error.debugDescription])
+                }
+            }
+        }
+    }
+    
+    /**
+    Return information about a specific playlist
+    - Parameter id: The id of the song
+    */
+    @objc
+    public func getPlaylist(_ id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if (client != nil) {
+            client!.getCatalogObjectWithId(mediaType: .playlists, id: id, include: nil) { result, error in
+                if (error == nil) {
+                    resolve(result)
+                } else {
+                    reject("Error fetching", "Error fetching", error)
                 }
             }
         }
@@ -262,7 +279,7 @@ class AppleMusicAPI: NSObject {
     @objc
     public func getAlbum(_ id: String, callback: @escaping RCTResponseSenderBlock) {
         if (client != nil) {
-          client!.getMediaInfoJsonString(mediaType: .albums, id: id) { results, error in
+            client!.getCatalogObjectWithId(mediaType: .albums, id: id, include: nil) { results, error in
                 if (error == nil) {
                     callback([true, [results]])
                 } else {
@@ -280,7 +297,7 @@ class AppleMusicAPI: NSObject {
     @objc
     public func getArtist(_ id: String, callback: @escaping RCTResponseSenderBlock) {
         if (client != nil) {
-          client!.getMediaInfoJsonString(mediaType: .artists, id: id) { results, error in
+            client!.getCatalogObjectWithId(mediaType: .artists, id: id, include: nil) { results, error in
                 if (error == nil) {
                     callback([true, [results]])
                 } else {

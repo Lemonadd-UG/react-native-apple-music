@@ -32,6 +32,10 @@ RCT_EXTERN_METHOD(getArtist:(NSString)id
 
 RCT_EXTERN_METHOD(getCharts:(RCTResponseSenderBlock)callback)
 
+RCT_EXTERN_METHOD(getPlaylist:(NSString)id
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(fetchSongWithIsrc:(NSString)isrc
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)

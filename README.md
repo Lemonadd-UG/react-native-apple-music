@@ -169,6 +169,13 @@ All functions returning a Promise that resolves to the result.
 
 		- A Promise that resolves the requested album
 
+- **getPlaylist**(*id*)
+
+	Get an specific Catalog Playlist by id
+
+	- *Returns*
+
+		- A Promise that resolves the requested playlist
 
 - **getArtist**(*id*)
 
