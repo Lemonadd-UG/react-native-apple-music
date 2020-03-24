@@ -40,7 +40,7 @@ RCT_EXTERN_METHOD(getSongs:(NSArray)ids
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(fetchSongWithIsrc:(NSString)isrc
+RCT_EXTERN_METHOD(getSongWithIsrc:(NSString)isrc
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 
