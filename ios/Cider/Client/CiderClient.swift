@@ -99,6 +99,17 @@ public struct CiderClient {
         }
     }
     
+    public func getObjects(mediaType: MediaType, ids: [String], include: [Include]? = nil, completion: @escaping (String, Error?) -> Void) {
+        let request = urlBuilder.getObjectsRequest(mediaType: mediaType, ids: ids, include: include)
+        fetcher.fetch(request: request) { (data, error, response) in
+            guard let data = data else {
+                completion("", error)
+                return
+            }
+            completion(String.init(data: data, encoding: .utf8) ?? "error decoding", nil)
+        }
+    }
+    
     /**
      Get recent played as json from user
      

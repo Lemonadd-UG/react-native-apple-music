@@ -235,6 +235,24 @@ class AppleMusicAPI: NSObject {
             }
         }
     }
+    
+    /**
+    Return information about a multiple songs
+    - Parameter id: The id of the song
+    */
+    @objc
+    public func getSongs(_ ids: [String], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if (client != nil) {
+            client!.getObjects(mediaType: .songs, ids: ids) { result, error in
+                if (error == nil) {
+                    resolve(result)
+                } else {
+                    reject("Error fetching", "Error fetching", error)
+                }
+            }
+        }
+    }
+
 
     /**
     Return information about a specific song

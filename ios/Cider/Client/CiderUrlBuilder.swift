@@ -21,6 +21,7 @@ protocol UrlBuilder {
     func userRecommendationsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
     func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest
     func addToPlaylistRequest(playlistId: String, mediaId: String ,mediaType: MediaType) -> URLRequest
+    func getObjectsRequest(mediaType: MediaType, ids: [String], include:[Include]?) -> URLRequest 
 }
 
 public enum CiderUrlBuilderError: Error {
@@ -47,9 +48,10 @@ private struct AppleMusicApi {
     static let filterParameter = "filter[isrc]"
 
     // Fetch
-    static let fetchPath = "v1/catalog/{storefront}/{mediaType}/{id}"
+    static let getCatalogObjectWithIdPath = "v1/catalog/{storefront}/{mediaType}/{id}"
     static let fetchInclude = "include"
-    static let fetchIsrcPath = "v1/catalog/{storefront}/{mediaType}"
+    static let getCatalogObjectPath = "v1/catalog/{storefront}/{mediaType}"
+    static let ids = "ids"
     
     // User-specific heavy-rotation https://api.music.apple.com/v1/me/history/heavy-rotation
     static let heavyRotationPath = "v1/me/history/heavy-rotation"
@@ -215,7 +217,7 @@ struct CiderUrlBuilder: UrlBuilder {
     private func fetchUrl(mediaType: MediaType, id: String, include: [Include]?) -> URL {
         var components = URLComponents()
 
-        components.path = AppleMusicApi.fetchPath.addStorefront(storefront).addMediaType(mediaType).addId(id)
+        components.path = AppleMusicApi.getCatalogObjectWithIdPath.addStorefront(storefront).addMediaType(mediaType).addId(id)
         components.apply(include: include)
 
         return components.url(relativeTo: baseApiUrl)!.absoluteURL
@@ -224,10 +226,20 @@ struct CiderUrlBuilder: UrlBuilder {
     private func fetchIsrcUrl(mediaType: MediaType, isrc: String, include: [Include]?) -> URL {
         var components = URLComponents()
 
-        components.path = AppleMusicApi.fetchIsrcPath.addStorefront(storefront).addMediaType(mediaType)
+        components.path = AppleMusicApi.getCatalogObjectPath.addStorefront(storefront).addMediaType(mediaType)
         components.apply(isrc: isrc)
 
         return components.url(relativeTo: baseApiUrl)!.absoluteURL
+    }
+    
+    private func getObjectsUrl(mediaType: MediaType, ids: [String], include: [Include]?) -> URL {
+        var componets = URLComponents()
+        
+        componets.path = AppleMusicApi.getCatalogObjectPath.addStorefront(storefront).addMediaType(mediaType)
+        componets.apply(ids: ids)
+        componets.apply(include: include)
+        
+        return componets.url(relativeTo: baseApiUrl)!.absoluteURL
     }
 
     private func relationshipUrl(path: String, limit: Int?, offset: Int?) -> URL {
@@ -287,6 +299,11 @@ struct CiderUrlBuilder: UrlBuilder {
     
     func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest {
         let url = fetchIsrcUrl(mediaType: mediaType, isrc: isrc, include: include)
+        return constructRequest(url: url)
+    }
+    
+    func getObjectsRequest(mediaType: MediaType, ids: [String], include:[Include]?) -> URLRequest {
+        let url = getObjectsUrl(mediaType: mediaType, ids: ids, include: include)
         return constructRequest(url: url)
     }
 
@@ -418,6 +435,11 @@ private extension URLComponents {
 
         createQueryItemsIfNeeded()
         queryItems?.append(URLQueryItem(name: AppleMusicApi.offsetParameter, value: "\(offset)"))
+    }
+    
+    mutating func apply(ids: [String]) {
+        createQueryItemsIfNeeded()
+        queryItems?.append(URLQueryItem(name: AppleMusicApi.ids, value: ids.map { $0 }.joined(separator: ",")))
     }
 
     mutating func apply(include: [Include]?) {

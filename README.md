@@ -153,6 +153,14 @@ All functions returning a Promise that resolves to the result.
 
 		- A Promise that resolves the requested song
 
+- **getSongs**(*[ids]*)
+
+	Get songs by id
+
+	- *Returns*
+
+		- A Promise that resolves the requested songs
+
 - **getSongWithIsrc**(*isrc*)
 
 	Get an specific song by isrc
