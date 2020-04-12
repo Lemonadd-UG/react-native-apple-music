@@ -228,7 +228,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.searchJsonString(term: searchString, limit: 24, offset: offset) { results, error in
                 if (error == nil) {
-                  callback([true, [results]])
+                  callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, [error.debugDescription]])
                 }
@@ -245,7 +245,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getObjects(mediaType: .songs, ids: ids) { result, error in
                 if (error == nil) {
-                    resolve(result)
+                    resolve(self.jsonToDic(json: result))
                 } else {
                     reject("Error fetching", "Error fetching", error)
                 }
@@ -264,7 +264,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .songs, id: id, include: nil) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -281,7 +281,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .playlists, id: id, include: nil) { result, error in
                 if (error == nil) {
-                    resolve(result)
+                    resolve(self.jsonToDic(json: result))
                 } else {
                     reject("Error fetching", "Error fetching", error)
                 }
@@ -299,7 +299,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .albums, id: id, include: nil) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -317,7 +317,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .artists, id: id, include: nil) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -334,7 +334,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.heavyRotationJsonString(limit: 10) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -351,7 +351,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.recentPlayedJsonString(limit: 10) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -368,7 +368,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.chartsJsonString(limit: 50, types: [.albums, .songs]) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -385,7 +385,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getAllUserPlaylistsJsonString(limit: 50) { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -398,7 +398,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.getUserPlaylistJsonString(id: id){ result, error in
                 if (error == nil) {
-                    resolve(result)
+                    resolve(self.jsonToDic(json: result))
                 } else{
                     reject("Error fetching", "Error fetching", error)
                 }
@@ -415,7 +415,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.recommendationsJsonString { results, error in
                 if (error == nil) {
-                    callback([true, [results]])
+                    callback([true, [self.jsonToDic(json: results)]])
                 } else {
                     callback([false, error.debugDescription])
                 }
@@ -441,7 +441,7 @@ class AppleMusicAPI: NSObject {
         if (client != nil) {
             client!.fetchIsrcJsonString(mediaType: .songs, isrc: isrc) { result, error in
                 if (error == nil) {
-                    resolve(result)
+                    resolve(self.jsonToDic(json: result))
                 } else{
                     reject("Error fetching", "Error fetching", error)
                 }
@@ -450,17 +450,28 @@ class AppleMusicAPI: NSObject {
     }
 
 
-  @objc
-  public func getUserRecordID(_ callback: @escaping RCTResponseSenderBlock) {
-    CKContainer.default().fetchUserRecordID { recordID, error in
-      if let recordIDName = recordID?.recordName {
-        callback([true, recordIDName])
-      } else {
-        callback([false, "Failure, user not logged in in iCloud"] )
-      }
+    @objc
+    public func getUserRecordID(_ callback: @escaping RCTResponseSenderBlock) {
+        CKContainer.default().fetchUserRecordID { recordID, error in
+            if let recordIDName = recordID?.recordName {
+                callback([true, recordIDName])
+            } else {
+                callback([false, "Failure, user not logged in in iCloud"] )
+            }
+        }
     }
-  }
 
+    private func jsonToDic(json: String) -> [String: Any]? {
+        if let jsonData = json.data(using: .utf8){
+            do {
+                return try JSONSerialization.jsonObject(with: jsonData) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil;
+    }
+    
     //required for ReactNative
     @objc
     static func requiresMainQueueSetup() -> Bool {
