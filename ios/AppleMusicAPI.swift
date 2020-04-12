@@ -73,17 +73,17 @@ class AppleMusicAPI: NSObject {
                           for ReactNative
     */
     @objc
-    public func initClientWithDevTokenAndUserToken(_ callback: @escaping RCTResponseSenderBlock) {
+    public func initClientWithDevTokenAndUserToken(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if(self.userToken == nil) {
             getUserToken { result, status in
                 if (status == 420) {
                     self.client = CiderClient(storefront: .germany, developerToken: self.devToken!, userToken: self.userToken!)
                 }
-                callback([status])
+                reject("error", "Error retrieving user token", AppleMusicApiError.init(id: status))
             }
             return
         }
-        callback([420])
+        resolve(420)
         return
     }
 
@@ -224,13 +224,13 @@ class AppleMusicAPI: NSObject {
     - Parameter callback: Callback for ReactNative
     */
     @objc
-    public func searchForTerm(_ searchString: String, offset: Int, callback: @escaping RCTResponseSenderBlock) {
+    public func searchForTerm(_ searchString: String, offset: Int, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.searchJsonString(term: searchString, limit: 24, offset: offset) { results, error in
                 if (error == nil) {
-                  callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, [error.debugDescription]])
+                    reject("error", "Error searching term", error)
                 }
             }
         }
@@ -247,7 +247,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else {
-                    reject("Error fetching", "Error fetching", error)
+                    reject("error", "Error fetching", error)
                 }
             }
         }
@@ -260,13 +260,13 @@ class AppleMusicAPI: NSObject {
     - Parameter callback: Callback for ReactNative
     */
     @objc
-    public func getSong(_ id: String, callback: @escaping RCTResponseSenderBlock) {
+    public func getSong(_ id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .songs, id: id, include: nil) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting song", error)
                 }
             }
         }
@@ -283,7 +283,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else {
-                    reject("Error fetching", "Error fetching", error)
+                    reject("error", "Error fetching song", error)
                 }
             }
         }
@@ -295,13 +295,13 @@ class AppleMusicAPI: NSObject {
     - Parameter callback: Callback for ReactNative
     */
     @objc
-    public func getAlbum(_ id: String, callback: @escaping RCTResponseSenderBlock) {
+    public func getAlbum(_ id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .albums, id: id, include: nil) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting album", error)
                 }
             }
         }
@@ -313,13 +313,13 @@ class AppleMusicAPI: NSObject {
     - Parameter callback: Callback for ReactNative
     */
     @objc
-    public func getArtist(_ id: String, callback: @escaping RCTResponseSenderBlock) {
+    public func getArtist(_ id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.getCatalogObjectWithId(mediaType: .artists, id: id, include: nil) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting artist", error)
                 }
             }
         }
@@ -330,13 +330,13 @@ class AppleMusicAPI: NSObject {
     - Parameter callback: Callback for ReactNative
     */
     @objc
-    public func getHeavyRotation(_ callback: @escaping RCTResponseSenderBlock) {
+    public func getHeavyRotation(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.heavyRotationJsonString(limit: 10) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting heavy rotation", error)
                 }
             }
         }
@@ -347,13 +347,13 @@ class AppleMusicAPI: NSObject {
      - Parameter callback: Callback for ReactNative
      */
     @objc
-    public func getRecentPlayed(_ callback: @escaping RCTResponseSenderBlock) {
+    public func getRecentPlayed(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.recentPlayedJsonString(limit: 10) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting recent played", error)
                 }
             }
         }
@@ -364,13 +364,13 @@ class AppleMusicAPI: NSObject {
      - Parameter callback: Callback for ReactNative
      */
     @objc
-    public func getCharts(_ callback: @escaping RCTResponseSenderBlock) {
+    public func getCharts(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.chartsJsonString(limit: 50, types: [.albums, .songs]) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting charts", error)
                 }
             }
         }
@@ -381,13 +381,13 @@ class AppleMusicAPI: NSObject {
      - Parameter callback: Callback for ReactNative
      */
     @objc
-    public func getAllUserPlaylists(_ callback: @escaping RCTResponseSenderBlock) {
+    public func getAllUserPlaylists(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.getAllUserPlaylistsJsonString(limit: 50) { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting user playlists", error)
                 }
             }
         }
@@ -400,7 +400,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else{
-                    reject("Error fetching", "Error fetching", error)
+                    reject("error", "Error getting user playlist", error)
                 }
             }
         }
@@ -411,13 +411,13 @@ class AppleMusicAPI: NSObject {
      - Parameter callback: Callback for ReactNative
      */
     @objc
-    public func getUserRecommendations(_ callback: @escaping RCTResponseSenderBlock) {
+    public func getUserRecommendations(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.recommendationsJsonString { results, error in
                 if (error == nil) {
-                    callback([true, [self.jsonToDic(json: results)]])
+                    resolve(self.jsonToDic(json: results))
                 } else {
-                    callback([false, error.debugDescription])
+                    reject("error", "Error getting reccommendations", error)
                 }
             }
         }
@@ -430,7 +430,7 @@ class AppleMusicAPI: NSObject {
                 if( error == nil) {
                     resolve(result)
                 } else {
-                    reject("Error adding", "Error adding", error)
+                    reject("error", "Error adding to playlist", error)
                 }
             }
         }
@@ -443,7 +443,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else{
-                    reject("Error fetching", "Error fetching", error)
+                    reject("error", "Error gettings song with isrc", error)
                 }
             }
         }
@@ -451,12 +451,12 @@ class AppleMusicAPI: NSObject {
 
 
     @objc
-    public func getUserRecordID(_ callback: @escaping RCTResponseSenderBlock) {
+    public func getUserRecordID(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         CKContainer.default().fetchUserRecordID { recordID, error in
             if let recordIDName = recordID?.recordName {
-                callback([true, recordIDName])
+                resolve(recordIDName)
             } else {
-                callback([false, "Failure, user not logged in in iCloud"] )
+                reject("error","Failure, user not logged in in iCloud", error)
             }
         }
     }
