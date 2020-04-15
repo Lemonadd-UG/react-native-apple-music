@@ -230,7 +230,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error searching term", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -247,7 +247,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else {
-                    reject("error", "Error fetching", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -266,7 +266,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting song", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -283,7 +283,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else {
-                    reject("error", "Error fetching song", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -301,7 +301,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting album", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -319,7 +319,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting artist", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -336,7 +336,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting heavy rotation", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -353,7 +353,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting recent played", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -370,7 +370,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting charts", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -387,7 +387,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting user playlists", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -400,7 +400,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else{
-                    reject("error", "Error getting user playlist", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -417,7 +417,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {
-                    reject("error", "Error getting reccommendations", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -430,7 +430,7 @@ class AppleMusicAPI: NSObject {
                 if( error == nil) {
                     resolve(result)
                 } else {
-                    reject("error", "Error adding to playlist", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -443,7 +443,7 @@ class AppleMusicAPI: NSObject {
                 if (error == nil) {
                     resolve(self.jsonToDic(json: result))
                 } else{
-                    reject("error", "Error gettings song with isrc", error)
+                    reject("error", error?.localizedDescription, error)
                 }
             }
         }
@@ -456,7 +456,7 @@ class AppleMusicAPI: NSObject {
             if let recordIDName = recordID?.recordName {
                 resolve(recordIDName)
             } else {
-                reject("error","Failure, user not logged in in iCloud", error)
+                reject("error",error?.localizedDescription, error)
             }
         }
     }
