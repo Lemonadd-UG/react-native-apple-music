@@ -5,9 +5,9 @@
 @interface RCT_EXTERN_MODULE(AppleMusicAPI, NSObject)
 
 //Api initialization
-RCT_EXTERN_METHOD(setValsAndInit:(NSString)keyID
-            devTeamID:(NSString)devTeamID
-            privateKey:(NSString)privateKey)
+RCT_EXTERN_METHOD(setValsAndInit:   (NSString)keyID
+                                    devTeamID:(NSString)devTeamID
+                                    privateKey:(NSString)privateKey)
 
 
 RCT_EXTERN_METHOD(initClientWithDevToken)
@@ -55,16 +55,16 @@ RCT_EXTERN_METHOD(getSongWithIsrc:  (NSString)isrc
 
 
 //login
-RCT_EXTERN_METHOD(getHeavyRotation: resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(getHeavyRotation: (RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(getRecentPlayed:  resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(getRecentPlayed:  (RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(getUserRecommendations:   resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(getUserRecommendations:   (RCTPromiseResolveBlock)resolve
                                             reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(getAllUserPlaylists:  resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(getAllUserPlaylists:  (RCTPromiseResolveBlock)resolve
                                         reject:(RCTPromiseRejectBlock)reject)
 
 
@@ -79,7 +79,7 @@ RCT_EXTERN_METHOD(addToPlaylist:    (NSString)playlistId
 
 
 //other
-RCT_EXTERN_METHOD(getUserRecordID:  resolve:(RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(getUserRecordID:  (RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
 @end
