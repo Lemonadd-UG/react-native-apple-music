@@ -9,13 +9,16 @@ RCT_EXTERN_METHOD(setValsAndInit:   (NSString)keyID
                                     devTeamID:(NSString)devTeamID
                                     privateKey:(NSString)privateKey)
 
-
-RCT_EXTERN_METHOD(initClientWithDevToken)
-RCT_EXTERN_METHOD(initClientWithDevTokenAndUserToken:   (RCTPromiseResolveBlock)resolve
-                                                        reject:(RCTPromiseRejectBlock)reject)
-
 RCT_EXTERN_METHOD(isInitialized:    (RCTResponseSenderBlock)callback)
 
+RCT_EXTERN_METHOD(getUserSubscriptionStatus: (RCTPromiseResolveBlock)resolve
+                                          reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(askUserForPermission: (RCTPromiseResolveBlock)resolve
+                                        reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(requestUserToken: (RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject)
 
 //Api functions
 //No login

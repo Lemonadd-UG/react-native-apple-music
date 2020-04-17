@@ -55,38 +55,9 @@ class AppleMusicAPI: NSObject {
         self.calcDeveloperToken()
 
         self.musicLibraryPermissionGranted = self.checkIfMusicLibraryPermissionGranted()
-    }
-
-    //MARK: Init of cider-client
-    /**
-    Initialization of client only with developer-token
-    */
-    @objc
-    public func initClientWithDevToken() {
         client = CiderClient(storefront: .germany, developerToken: self.devToken!)
     }
-
-    /**
-    Initialization of client with developer-token and user-token
-    for access of private AppleMusic library
-    - Parameter callback: func uses web-request for getting the token, callback for result (success/failure)
-                          for ReactNative
-    */
-    @objc
-    public func initClientWithDevTokenAndUserToken(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-        if(self.userToken == nil) {
-            getUserToken { result, status in
-                if (status == 420) {
-                    self.client = CiderClient(storefront: .germany, developerToken: self.devToken!, userToken: self.userToken!)
-                }
-                reject("error", "Error retrieving user token", AppleMusicApiError.init(id: status))
-            }
-            return
-        }
-        resolve(420)
-        return
-    }
-
+    
     //MARK: Calculating and requesting tokens
 
     /**
@@ -111,46 +82,15 @@ class AppleMusicAPI: NSObject {
         }
     }
 
-    /**
-    Request for user-token
-    - Parameter completion: callback with
-                                - String: reason for success/failure
-                                - 0...20 Error occured in SKCloudServiceController (see https://developer.apple.com/documentation/storekit/skerror/code)
-                                - 420 success
-                                - 421 User has declined permission
-                                - 422 The device is not able to playback Apple Music catalog tracks (No Apple Music subscriber)
-                                - 424 Dev.-token is missing
-                                - 423 Apple completly messed up in SKCloudServiceController
-    */
-    private func getUserToken(completion: @escaping (String, Int) -> Void) {
-      if self.devToken == nil {
-        completion("AppleMusicAPI: Client is not initialized! Development token is missing!", 424)
-        return
-      }
-      firstly {
-        askUserForMusicLibPermission()
-      }.then {
-        self.checkSKCloudServiceCapability()
-      }.then {
-        self.requestUserTokenPromise()
-      }.done { userToken in
-        self.userToken = userToken
-        completion("AppleMusicAPI: success, user-token is: " + self.userToken!, 420)
-      }.catch { error in
-        let appleMusicApiError = error as? AppleMusicApiError
-        let code = appleMusicApiError?.id ?? AppleMusicApiError.SKCLOUDSERVICE_FATAL_ERROR
-        completion("Apple Music Api error: " + String(code), code)
-      }
-  }
 
-  func requestUserTokenPromise() -> Promise<String?> {
+  func requestUserTokenPromise() -> Promise<Void> {
     return Promise { promise in
       self.controller.requestUserToken(forDeveloperToken: self.devToken!) { token, error in
         if (error == nil) {
-          promise.fulfill(token)
+            self.userToken = token;
+            promise.fulfill(());
         } else {
-          let skError = error as? SKError
-          promise.reject(AppleMusicApiError(id: skError?.errorCode ?? AppleMusicApiError.SKCLOUDSERVICE_FATAL_ERROR))
+          promise.reject(error!)
       }
     }
   }
@@ -175,21 +115,22 @@ class AppleMusicAPI: NSObject {
     Ask user for rights to access the music-library, will show an promt yes/no with
     Privacy - Media Library Usage Description-text
     */
-    private func askUserForMusicLibPermission() -> Promise<Void> {
+    private func askUserForMusicLibPermission() -> Promise<String> {
       return Promise { promise in
         SKCloudServiceController.requestAuthorization { result in
             switch result {
             case .authorized:
                 self.musicLibraryPermissionGranted = true;
-                promise.fulfill(())
+                promise.fulfill("authorized")
             case .denied:
-                print("Permission denied!")
                 self.musicLibraryPermissionGranted = false;
-                promise.reject(AppleMusicApiError(id: AppleMusicApiError.USER_DECLINED_PERMISSION))
+                promise.fulfill("denied")
+            case .restricted:
+                self.musicLibraryPermissionGranted = false;
+                promise.fulfill("restricted")
             default:
-                print("Permission not available!")
                 self.musicLibraryPermissionGranted = false;
-                promise.reject(AppleMusicApiError(id: AppleMusicApiError.USER_DECLINED_PERMISSION))
+                promise.reject(AppleMusicApiError("The authorization type cannot be determined."))
             }
         }
       }
@@ -206,15 +147,48 @@ class AppleMusicAPI: NSObject {
               if capabilities.contains(.musicCatalogPlayback){
                 promise.fulfill(())
               } else {
-                promise.reject(AppleMusicApiError(id: AppleMusicApiError.USER_IS_NO_APPLE_MUSIC_SUBSCRIBER))
+                promise.reject(AppleMusicApiError("User has no subscription"))
               }
             } else {
-              let skError = error as? SKError
-              promise.reject(AppleMusicApiError(id: skError?.errorCode ?? AppleMusicApiError.SKCLOUDSERVICE_FATAL_ERROR))
+              promise.reject(error!)
           }
         }
       }
     }
+    
+    @objc
+    public func getUserSubscriptionStatus(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        firstly{
+            checkSKCloudServiceCapability();
+        }.done{
+            resolve("Subscribed");
+        }.catch{ error in
+            reject("Error", error.localizedDescription, error );
+        }
+    }
+    
+    @objc
+    public func askUserForPermission(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+          firstly{
+              askUserForMusicLibPermission()
+          }.done{ result in
+              resolve(result);
+          }.catch{ error in
+              reject("Error", error.localizedDescription, error );
+          }
+      }
+    
+    @objc
+    public func requestUserToken(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+          firstly{
+              requestUserTokenPromise()
+          }.done{
+              self.client = CiderClient(storefront: .germany, developerToken: self.devToken!, userToken: self.userToken!)
+              resolve("Ready to go");
+          }.catch{ error in
+              reject("Error", error.localizedDescription, error );
+          }
+      }
 
     // MARK: Actual functions from the API
     /**

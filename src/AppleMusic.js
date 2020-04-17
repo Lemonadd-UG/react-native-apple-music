@@ -7,10 +7,6 @@ if (Platform.OS == 'ios') {
 
   AppleMusic.initialize = AppleMusic.setValsAndInit
 
-  AppleMusic.login_basic = AppleMusic.initClientWithDevToken
-
-  AppleMusic.login = AppleMusic.initClientWithDevTokenAndUserToken
-
   AppleMusic.getICloudID = AppleMusic.getUserRecordID
 
   AppleMusic.getSongCharts = AppleMusic.getCharts
