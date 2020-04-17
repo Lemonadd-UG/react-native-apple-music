@@ -34,11 +34,29 @@ class AppleMusicAPI: NSObject {
 
 
     @objc
-    public func isInitialized(_ callback: @escaping RCTResponseSenderBlock) {
+    public func isReadyForBasicRequests(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         var isInit: Bool
-        isInit = (devToken != nil && userToken != nil && client != nil)
-        callback([isInit])
+        isInit = (devToken != nil && client != nil)
+        if(isInit){
+          resolve(true)
+        }
+        else{
+          reject("Error", "Not ready, please init!" , AppleMusicApiError("Please init first!"))
+        }
     }
+    
+    @objc
+    public func isReadyForUserRequests(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        var isInit: Bool
+        isInit = (devToken != nil && client != nil && userToken != nil)
+        if(isInit){
+          resolve(true)
+        }
+        else{
+          reject("Error", "Not ready, please init!" , AppleMusicApiError("Please init first!"))
+        }
+    }
+
 
     /**
     Initialization of API
@@ -198,9 +216,10 @@ class AppleMusicAPI: NSObject {
     - Parameter callback: Callback for ReactNative
     */
     @objc
-    public func searchForTerm(_ searchString: String, offset: Int, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func searchForTerm(_ searchString: String, offset: Int, type: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
-            client!.searchJsonString(term: searchString, limit: 24, offset: offset) { results, error in
+            let type = MediaType.init(rawValue: type);
+            client!.searchJsonString(term: searchString, limit: 24, offset: offset, types: [type!]) { results, error in
                 if (error == nil) {
                     resolve(self.jsonToDic(json: results))
                 } else {

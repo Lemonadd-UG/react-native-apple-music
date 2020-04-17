@@ -9,7 +9,12 @@ RCT_EXTERN_METHOD(setValsAndInit:   (NSString)keyID
                                     devTeamID:(NSString)devTeamID
                                     privateKey:(NSString)privateKey)
 
-RCT_EXTERN_METHOD(isInitialized:    (RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(isReadyForBasicRequests:    (RCTPromiseResolveBlock)resolve
+                                              reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(isReadyForUserRequests:    (RCTPromiseResolveBlock)resolve
+                                              reject:(RCTPromiseRejectBlock)reject)
+
 
 RCT_EXTERN_METHOD(getUserSubscriptionStatus: (RCTPromiseResolveBlock)resolve
                                           reject:(RCTPromiseRejectBlock)reject)
@@ -24,6 +29,7 @@ RCT_EXTERN_METHOD(requestUserToken: (RCTPromiseResolveBlock)resolve
 //No login
 RCT_EXTERN_METHOD(searchForTerm:    (NSString)term
                                     offset:(int)offset
+                                    type:(NSString)type
                                     resolve:(RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
