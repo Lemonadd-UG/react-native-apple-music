@@ -430,6 +430,19 @@ class AppleMusicAPI: NSObject {
     }
     
     @objc
+    public func newPlaylist(_ name: String, description: String, trackIds: [String], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if ( client != nil) {
+            client!.newPlaylist(name: name, description: description, trackIds: trackIds){ (result, error) in
+                if( error == nil) {
+                    resolve(result)
+                } else {
+                    reject("error", error?.localizedDescription, error)
+                }
+            }
+        }
+    }
+    
+    @objc
     public func getSongWithIsrc(_ isrc: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         if (client != nil) {
             client!.fetchIsrcJsonString(mediaType: .songs, isrc: isrc) { result, error in

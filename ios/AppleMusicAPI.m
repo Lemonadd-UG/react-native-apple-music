@@ -86,6 +86,11 @@ RCT_EXTERN_METHOD(addToPlaylist:    (NSString)playlistId
                                     resolve:(RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(newPlaylist:      (NSString)name
+                                    description:(NSString)description
+                                    trackIds:(NSArray)trackIds
+                                    resolve:(RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject)
 
 //other
 RCT_EXTERN_METHOD(getUserRecordID:  (RCTPromiseResolveBlock)resolve
