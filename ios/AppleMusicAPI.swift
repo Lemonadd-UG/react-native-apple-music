@@ -6,7 +6,7 @@
 //  Copyright © 2020 Janik Steegmüller. All rights reserved.
 //
 import Foundation
-import SwiftJWT
+import CupertinoJWT
 import StoreKit
 import PromiseKit
 import CloudKit
@@ -83,19 +83,15 @@ class AppleMusicAPI: NSObject {
     - Throws: JWTError if private-key is malformed
     */
     private func calcDeveloperToken() {
-        if (devToken == nil) {
-
-            //Setting the values for calculating JWT
-            let amJWTHeader = Header(kid: self.keyID!)
-            let amJWTPayload = amClaims(iss: self.devTeamID!, iat: Date(), exp: Date().addingTimeInterval(15777000))
-            var amJWT = JWT(header: amJWTHeader, claims: amJWTPayload)
-
-            //Sign created JWT with privateKey (= developerToken) and return
-            let jwtSigner = JWTSigner.es256(privateKey: self.privateKey!.data(using: .utf8)!)
+        if (self.devToken == nil && self.privateKey != nil && self.keyID != nil && self.devTeamID != nil) {
+            // Assign developer information and token expiration setting
+            let jwt = JWT(keyID: self.keyID!, teamID: self.devTeamID!, issueDate: Date(), expireDuration: 15777000)
             do {
-                devToken = try amJWT.sign(using: jwtSigner)
+                self.devToken = try jwt.sign(with: self.privateKey!)
+                // Use the token in the authorization header in your requests connecting to Apple’s API server.
+                // e.g. urlRequest.addValue(_ value: "bearer \(token)", forHTTPHeaderField field: "authorization")
             } catch {
-                print("AppleMusicAPI: There was an error calculating your developmentToken, is the PrivateKey in the right format?")
+                print(error.localizedDescription)
             }
         }
     }
@@ -485,7 +481,7 @@ class AppleMusicAPI: NSObject {
     }
 
     // MARK: Claims for Apple Music JWT
-    struct amClaims: Claims {
+    struct AppleMusicClaims: Codable {
         let iss: String
         let iat: Date
         let exp: Date

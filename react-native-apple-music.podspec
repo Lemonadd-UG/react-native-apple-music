@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.dependency "React"
-  s.dependency 'SwiftJWT'
+  s.dependency "CupertinoJWT"
   s.dependency "PromiseKit", '~> 6.8'
   # ...
   # s.dependency "..."
