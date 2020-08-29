@@ -95,6 +95,30 @@ class AppleMusicAPI: NSObject {
             }
         }
     }
+    
+    /**
+    Get developer token
+    */
+    @objc
+    public func getDeveloperToken(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if(devToken != nil){
+          resolve(devToken)
+        } else {
+          reject("Error", "No dev token available" , AppleMusicApiError("Please init first!"))
+        }
+    }
+    
+    /**
+    Get user token
+    */
+    @objc
+    public func getUserToken(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if(userToken != nil){
+          resolve(userToken)
+        } else {
+          reject("Error", "No user token available" , AppleMusicApiError("Please init first!"))
+        }
+    }
 
 
   func requestUserTokenPromise() -> Promise<Void> {

@@ -25,6 +25,12 @@ RCT_EXTERN_METHOD(askUserForPermission: (RCTPromiseResolveBlock)resolve
 RCT_EXTERN_METHOD(requestUserToken: (RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(getDeveloperToken: (RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getUserToken: (RCTPromiseResolveBlock)resolve
+                                reject:(RCTPromiseRejectBlock)reject)
+
 //Api functions
 //No login
 RCT_EXTERN_METHOD(searchForTerm:    (NSString)term
