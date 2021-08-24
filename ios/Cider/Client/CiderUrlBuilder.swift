@@ -21,7 +21,8 @@ protocol UrlBuilder {
     func userRecommendationsRequest(limit: Int?, offset: Int?, types: [MediaType]?) -> URLRequest
     func fetchIsrcRequest(mediaType: MediaType, isrc: String, include: [Include]?) -> URLRequest
     func addToPlaylistRequest(playlistId: String, mediaId: String ,mediaType: MediaType) -> URLRequest
-    func getObjectsRequest(mediaType: MediaType, ids: [String], include:[Include]?) -> URLRequest 
+    func getObjectsRequest(mediaType: MediaType, ids: [String], include:[Include]?) -> URLRequest
+    func newPlaylistRequest(name: String, description: String, trackIds: [String]) -> URLRequest
 }
 
 public enum CiderUrlBuilderError: Error {
@@ -60,7 +61,7 @@ private struct AppleMusicApi {
     static let recentPlayedPath = "v1/me/recent/played"
     
     // Private user playlists
-    static let allUserPlaylistsPath = "v1/me/library/playlists"
+    static let userPlaylistsPath = "v1/me/library/playlists"
     static let userPlaylistPath  = "v1/me/library/playlists/{id}"
     
     //Charts of specific country https://api.music.apple.com/v1/catalog/{storefront}/charts
@@ -145,7 +146,7 @@ struct CiderUrlBuilder: UrlBuilder {
     private func allUserPlaylistsUrl( limit: Int?, offset: Int?) -> URL {
         var components = URLComponents()
         
-        components.path = AppleMusicApi.allUserPlaylistsPath
+        components.path = AppleMusicApi.userPlaylistsPath
         
         components.apply(limit: limit)
         components.apply(offset: offset)
@@ -259,6 +260,14 @@ struct CiderUrlBuilder: UrlBuilder {
         
         return compoments.url(relativeTo: baseApiUrl)!.absoluteURL
     }
+    
+    private func createPlaylistUrl() -> URL {
+        var components = URLComponents()
+        
+        components.path = AppleMusicApi.userPlaylistsPath
+        
+        return components.url(relativeTo: baseApiUrl)!.absoluteURL
+    }
 
     // MARK: Construct requests
     
@@ -322,20 +331,47 @@ struct CiderUrlBuilder: UrlBuilder {
         return constructRequest(url: url)
     }
     
+    func newPlaylistRequest(name: String, description: String, trackIds: [String]) -> URLRequest {
+        let url = createPlaylistUrl()
+        let attributes = LibraryPlaylistCreationRequest.Attributes(description: description, name: name)
+        var data: [LibraryPlaylistCreationRequest.LibraryPlaylistRequestTrack] = []
+        for id in trackIds {
+            let track = LibraryPlaylistCreationRequest.LibraryPlaylistRequestTrack(id: id, type: .songs)
+            data.append(track)
+        }
+        let trackData = LibraryPlaylistCreationRequest.Data(data: data)
+        let relationships = LibraryPlaylistCreationRequest.Relationships(tracks: trackData)
+        
+        let post = LibraryPlaylistCreationRequest(attributes: attributes, relationships: relationships)
+        
+        return constructLibraryPlaylistCreationRequest(url: url, playlist: post)
+    }
+    
     func addToPlaylistRequest(playlistId: String, mediaId: String ,mediaType: MediaType) -> URLRequest {
         let url = addToPlaylistUrl(playlistId: playlistId)
         let data = [LibraryPlaylistRequestTrack.Media(id: mediaId, type: mediaType)]
         
-        return constructPostRequest(url: url, media: LibraryPlaylistRequestTrack(data: data))
+        return constructLibraryPlaylistRequest(url: url, media: LibraryPlaylistRequestTrack(data: data))
     }
 
-    func constructPostRequest(url: URL, media: LibraryPlaylistRequestTrack) -> URLRequest {
+    func constructLibraryPlaylistRequest(url: URL, media: LibraryPlaylistRequestTrack) -> URLRequest {
         var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeout)
         request = addAuth(request: request)
         request = try! addUserToken(request: request)
         
         request.httpMethod = "POST"
         request.httpBody = try! JSONEncoder().encode(media)
+        
+        return request
+    }
+    
+    func constructLibraryPlaylistCreationRequest(url: URL, playlist: LibraryPlaylistCreationRequest) -> URLRequest {
+        var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeout)
+        request = addAuth(request: request)
+        request = try! addUserToken(request: request)
+        
+        request.httpMethod = "POST"
+        request.httpBody = try! JSONEncoder().encode(playlist)
         
         return request
     }

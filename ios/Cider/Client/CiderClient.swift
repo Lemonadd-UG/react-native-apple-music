@@ -194,6 +194,18 @@ public struct CiderClient {
         }
     }
     
+    public func newPlaylist(name: String, description: String, trackIds: [String], completion: @escaping (String, Error?) -> Void){
+        let request = urlBuilder.newPlaylistRequest(name: name, description: description, trackIds: trackIds)
+        fetcher.fetch(request: request) {(data, error, response) in
+            guard data != nil else {
+                completion("", error)
+                return
+            }
+            let httpResponse: HTTPURLResponse = response as! HTTPURLResponse
+            completion(String(httpResponse.statusCode) , nil)
+        }
+    }
+
     public func getCatalogObjectWithId(mediaType: MediaType, id: String, include:[Include]? ,completion: @escaping (String, Error?) -> Void){
         let request = urlBuilder.fetchRequest(mediaType: mediaType, id: id, include: include)
         fetcher.fetch(request: request){ (data, error, response) in

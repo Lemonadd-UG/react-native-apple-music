@@ -16,6 +16,7 @@
 		497DE281241AE9D3002FE1A4 /* Include.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27B241AE9D3002FE1A4 /* Include.swift */; };
 		497DE282241AE9D3002FE1A4 /* UrlFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */; };
 		497DE283241AE9D3002FE1A4 /* CiderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE27D241AE9D3002FE1A4 /* CiderClient.swift */; };
+		498DC8E6244C5ACF006A87D6 /* LibraryPlaylistCreationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498DC8E5244C5ACF006A87D6 /* LibraryPlaylistCreationRequest.swift */; };
 		49AD87D62426317B00C771F3 /* LibraryPlaylistRequestTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AD87D52426317B00C771F3 /* LibraryPlaylistRequestTrack.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		497DE27B241AE9D3002FE1A4 /* Include.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Include.swift; sourceTree = "<group>"; };
 		497DE27C241AE9D3002FE1A4 /* UrlFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlFetcher.swift; sourceTree = "<group>"; };
 		497DE27D241AE9D3002FE1A4 /* CiderClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CiderClient.swift; sourceTree = "<group>"; };
+		498DC8E5244C5ACF006A87D6 /* LibraryPlaylistCreationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPlaylistCreationRequest.swift; sourceTree = "<group>"; };
 		49AD87D52426317B00C771F3 /* LibraryPlaylistRequestTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPlaylistRequestTrack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				49AD87D52426317B00C771F3 /* LibraryPlaylistRequestTrack.swift */,
+				498DC8E5244C5ACF006A87D6 /* LibraryPlaylistCreationRequest.swift */,
 			);
 			name = JsonModels;
 			path = Cider/JsonModels;
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498DC8E6244C5ACF006A87D6 /* LibraryPlaylistCreationRequest.swift in Sources */,
 				497DE283241AE9D3002FE1A4 /* CiderClient.swift in Sources */,
 				497DE27F241AE9D3002FE1A4 /* MediaType.swift in Sources */,
 				497DE281241AE9D3002FE1A4 /* Include.swift in Sources */,

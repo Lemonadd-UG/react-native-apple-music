@@ -9,18 +9,33 @@ RCT_EXTERN_METHOD(setValsAndInit:   (NSString)keyID
                                     devTeamID:(NSString)devTeamID
                                     privateKey:(NSString)privateKey)
 
+RCT_EXTERN_METHOD(isReadyForBasicRequests:    (RCTPromiseResolveBlock)resolve
+                                              reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(initClientWithDevToken)
-RCT_EXTERN_METHOD(initClientWithDevTokenAndUserToken:   (RCTPromiseResolveBlock)resolve
-                                                        reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(isReadyForUserRequests:    (RCTPromiseResolveBlock)resolve
+                                              reject:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(isInitialized:    (RCTResponseSenderBlock)callback)
 
+RCT_EXTERN_METHOD(getUserSubscriptionStatus: (RCTPromiseResolveBlock)resolve
+                                          reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(askUserForPermission: (RCTPromiseResolveBlock)resolve
+                                        reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(requestUserToken: (RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getDeveloperToken: (RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getUserToken: (RCTPromiseResolveBlock)resolve
+                                reject:(RCTPromiseRejectBlock)reject)
 
 //Api functions
 //No login
 RCT_EXTERN_METHOD(searchForTerm:    (NSString)term
                                     offset:(int)offset
+                                    type:(NSString)type
                                     resolve:(RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
@@ -77,6 +92,11 @@ RCT_EXTERN_METHOD(addToPlaylist:    (NSString)playlistId
                                     resolve:(RCTPromiseResolveBlock)resolve
                                     reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(newPlaylist:      (NSString)name
+                                    description:(NSString)description
+                                    trackIds:(NSArray)trackIds
+                                    resolve:(RCTPromiseResolveBlock)resolve
+                                    reject:(RCTPromiseRejectBlock)reject)
 
 //other
 RCT_EXTERN_METHOD(getUserRecordID:  (RCTPromiseResolveBlock)resolve
